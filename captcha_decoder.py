@@ -1,17 +1,16 @@
 from PIL import Image
 import sys
 
-
 def decoder(
         im,
         threshold=200,
-        mask="letters.bmp",
-        alphabet="0123456789abcdef"):
+        mask="vc.bmp",
+        alphabet="0123456789"):
 
     img = Image.open(im)
     img = img.convert("RGB")
-    box = (8, 8, 58, 18)
-    img = img.crop(box)
+    # box = (8, 8, 58, 18)
+    # img = img.crop(box)
     pixdata = img.load()
 
     # open the mask
@@ -28,7 +27,7 @@ def decoder(
             _sum = 0
             for i in range(letter.size[0]):
                 for j in range(letter.size[1]):
-                    _sum = _sum + abs(A[x + i, j][0] - B[i, j][0])
+                    _sum = _sum + abs(A[x + i, j][0] - B[i, j])
             if _sum < mx:
                 mx = _sum
                 max_x = x
@@ -53,7 +52,7 @@ def decoder(
     for x in range(letters.size[0]):
         black = True
         for y in range(letters.size[1]):
-            if ledata[x, y][0] != 0:
+            if ledata[x, y] != 0:
                 black = False
                 break
         if black:
@@ -70,7 +69,7 @@ def decoder(
     letterlist.append((t[0], alphabet[counter], t[1]))
 
     t = sorted(letterlist)
-    t = t[0:5]  # 5-letter captcha
+    t = t[0:4]  # 4-letter captcha
 
     final = sorted(t, key=lambda e: e[2])
 
