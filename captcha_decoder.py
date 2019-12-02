@@ -3,7 +3,7 @@ import sys
 
 def decoder(
         im,
-        threshold=200,
+        threshold=120,
         mask="vc.bmp",
         alphabet="0123456789"):
 
@@ -40,11 +40,11 @@ def decoder(
             if (pixdata[x, y][0] > threshold) \
                     and (pixdata[x, y][1] > threshold) \
                     and (pixdata[x, y][2] > threshold):
-                # white
-                pixdata[x, y] = (255, 255, 255, 255)
-            else:
                 # black
                 pixdata[x, y] = (0, 0, 0, 255)
+            else:
+                # white
+                pixdata[x, y] = (255, 255, 255, 255)
 
     counter = 0
     old_x = -1
