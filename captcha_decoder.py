@@ -45,6 +45,7 @@ def decoder(
             else:
                 # white
                 pixdata[x, y] = (255, 255, 255, 255)
+    # img.save("/Users/alphahinex/Desktop/BoW.jpg")
 
     counter = 0
     old_x = -1
@@ -63,6 +64,7 @@ def decoder(
             letter = letters.crop(box)
             t = test_letter(img, letter)
             letterlist.append((t[0], alphabet[counter], t[1]))
+            # letter.save("/Users/alphahinex/Desktop/" + alphabet[counter] + ".jpg")
             old_x = x
             counter += 1
 
@@ -70,6 +72,7 @@ def decoder(
     letter = letters.crop(box)
     t = test_letter(img, letter)
     letterlist.append((t[0], alphabet[counter], t[1]))
+    # letter.save("/Users/alphahinex/Desktop/" + alphabet[counter] + ".jpg")
 
     t = sorted(letterlist)
     t = t[0:4]  # 4-letter captcha
