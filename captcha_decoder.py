@@ -40,9 +40,10 @@ def decoder(
             if (pixdata[x, y][0] > threshold) \
                     and (pixdata[x, y][1] > threshold) \
                     and (pixdata[x, y][2] > threshold):
-
+                # white
                 pixdata[x, y] = (255, 255, 255, 255)
             else:
+                # black
                 pixdata[x, y] = (0, 0, 0, 255)
 
     counter = 0
