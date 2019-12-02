@@ -9,8 +9,9 @@ def decoder(
 
     img = Image.open(im)
     img = img.convert("RGB")
-    # box = (8, 8, 58, 18)
-    # img = img.crop(box)
+    # minimize verified code area in the input image
+    box = (4, 3, 45, 12)
+    img = img.crop(box)
     pixdata = img.load()
 
     # open the mask
@@ -27,7 +28,7 @@ def decoder(
             _sum = 0
             for i in range(letter.size[0]):
                 for j in range(letter.size[1]):
-                    _sum = _sum + abs(A[x + i, j][0] - B[i, j])
+                    _sum = _sum + abs(A[x + i, j][0] - B[i, j][0])
             if _sum < mx:
                 mx = _sum
                 max_x = x
@@ -52,18 +53,19 @@ def decoder(
     for x in range(letters.size[0]):
         black = True
         for y in range(letters.size[1]):
-            if ledata[x, y] != 0:
+            if ledata[x, y][0] != 0:
                 black = False
                 break
         if black:
-            box = (old_x + 1, 0, x, 10)
+            # one digit box, (left, upper, right, lower)
+            box = (old_x + 1, 0, x, 9)
             letter = letters.crop(box)
             t = test_letter(img, letter)
             letterlist.append((t[0], alphabet[counter], t[1]))
             old_x = x
             counter += 1
 
-    box = (old_x + 1, 0, 140, 10)
+    box = (old_x + 1, 0, 65, 9)
     letter = letters.crop(box)
     t = test_letter(img, letter)
     letterlist.append((t[0], alphabet[counter], t[1]))
