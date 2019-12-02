@@ -3,14 +3,14 @@ import sys
 
 def decoder(
         im,
-        threshold=120,
+        threshold=110,
         mask="vc.bmp",
         alphabet="0123456789"):
 
     img = Image.open(im)
     img = img.convert("RGB")
     # minimize verified code area in the input image
-    box = (4, 3, 45, 12)
+    box = (4, 3, 46, 12)
     img = img.crop(box)
     pixdata = img.load()
 
