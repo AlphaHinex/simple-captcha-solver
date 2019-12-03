@@ -3,7 +3,7 @@ import sys
 
 def decoder(
         im,
-        threshold=110,
+        threshold=100,
         mask="vc.bmp",
         alphabet="0123456789"):
 
