@@ -75,7 +75,9 @@ def decoder(
     # letter.save("/Users/alphahinex/Desktop/" + alphabet[counter] + ".jpg")
 
     t = sorted(letterlist)
-    t = t[0:4]  # 4-letter captcha
+    # t = t[0:4]  # 4-letter captcha
+    # use threshold to filter matched letters
+    t = filter(lambda l: l[0] < threshold, t)
 
     final = sorted(t, key=lambda e: e[2])
 
