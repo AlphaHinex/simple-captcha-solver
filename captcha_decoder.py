@@ -32,6 +32,8 @@ def decoder(
             if _sum < mx:
                 mx = _sum
                 max_x = x
+            if _sum == mx and max_x != x and  _sum < threshold * 10:
+                print("a: %d, %d; b: %d, %d" % (max_x, mx, x, _sum))
         return mx, max_x
 
     # Clean the background noise, if color != white, then set to black.
