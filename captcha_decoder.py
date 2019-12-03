@@ -18,12 +18,13 @@ def decoder(
     letters = Image.open(mask)
     ledata = letters.load()
 
-    def test_letter(img, letter):
+    letterlist = []
+
+    def test_letter(img, letter, alphabet):
         A = img.load()
         B = letter.load()
         mx = 1000000
         max_x = 0
-        x = 0
         for x in range(img.size[0] - letter.size[0] + 1):
             _sum = 0
             for i in range(letter.size[0]):
@@ -33,8 +34,9 @@ def decoder(
                 mx = _sum
                 max_x = x
             if _sum == mx and max_x != x and  _sum < threshold * 10:
-                print("a: %d, %d; b: %d, %d" % (max_x, mx, x, _sum))
-        return mx, max_x
+                # print("a: %d, %d; b: %d, %d" % (max_x, mx, x, _sum))
+                letterlist.append((_sum, alphabet, x))
+        letterlist.append((mx, alphabet, max_x))
 
     # Clean the background noise, if color != white, then set to black.
     for y in range(img.size[1]):
@@ -52,8 +54,6 @@ def decoder(
     counter = 0
     old_x = -1
 
-    letterlist = []
-
     for x in range(letters.size[0]):
         black = True
         for y in range(letters.size[1]):
@@ -65,15 +65,13 @@ def decoder(
             box = (old_x + 1, 0, x, 9)
             letter = letters.crop(box)
             # letter.save("/Users/alphahinex/Desktop/" + alphabet[counter] + ".jpg")
-            t = test_letter(img, letter)
-            letterlist.append((t[0], alphabet[counter], t[1]))
+            test_letter(img, letter, alphabet[counter])
             old_x = x
             counter += 1
 
     box = (old_x + 1, 0, 65, 9)
     letter = letters.crop(box)
-    t = test_letter(img, letter)
-    letterlist.append((t[0], alphabet[counter], t[1]))
+    test_letter(img, letter, alphabet[counter])
     # letter.save("/Users/alphahinex/Desktop/" + alphabet[counter] + ".jpg")
 
     t = sorted(letterlist)
