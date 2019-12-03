@@ -24,7 +24,7 @@ def decoder(
         mx = 1000000
         max_x = 0
         x = 0
-        for x in range(img.size[0] - letter.size[0]):
+        for x in range(img.size[0] - letter.size[0] + 1):
             _sum = 0
             for i in range(letter.size[0]):
                 for j in range(letter.size[1]):
@@ -62,9 +62,9 @@ def decoder(
             # one digit box, (left, upper, right, lower)
             box = (old_x + 1, 0, x, 9)
             letter = letters.crop(box)
+            # letter.save("/Users/alphahinex/Desktop/" + alphabet[counter] + ".jpg")
             t = test_letter(img, letter)
             letterlist.append((t[0], alphabet[counter], t[1]))
-            # letter.save("/Users/alphahinex/Desktop/" + alphabet[counter] + ".jpg")
             old_x = x
             counter += 1
 
@@ -75,9 +75,9 @@ def decoder(
     # letter.save("/Users/alphahinex/Desktop/" + alphabet[counter] + ".jpg")
 
     t = sorted(letterlist)
-    # t = t[0:4]  # 4-letter captcha
+    t = t[0:4]  # 4-letter captcha
     # use threshold to filter matched letters
-    t = filter(lambda l: l[0] < threshold, t)
+    t = filter(lambda l: l[0] < threshold * 10, t)
 
     final = sorted(t, key=lambda e: e[2])
 
