@@ -6,7 +6,11 @@ class TestStringMethods(unittest.TestCase):
 
     def test_images(self):
         # Right
-        self.assertEqual(decoder('imageRandeCode.jpg'), '6263')
+        self.assertEqual(decoder('raw-material/8774.png', 120), '8774')
+        self.assertEqual(decoder('raw-material/0727.png', 120), '0727')
+        self.assertEqual(decoder('raw-material/3358.png', 110), '3358')
+        self.assertEqual(decoder('raw-material/4094.png', 110), '4094')
+        self.assertEqual(decoder('raw-material/imageRandeCode.jpg'), '6263')
         self.assertEqual(decoder('raw-material/0.jpg'), '0619')
         self.assertEqual(decoder('raw-material/1.jpg'), '1683')
         self.assertEqual(decoder('raw-material/2.jpg'), '2983')
